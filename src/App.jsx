@@ -1,19 +1,16 @@
-import { useState } from "react"
-// import Banner from "./components/Banner/Banner"
-// import CoinTable from "./components/CoinTable/CoinTable"
-// import NavBar from "./components/NavBar/NavBar"
-import Home from "./pages/Home";
-import { CurrencyContext } from "./context/currencyContext";
+// import { useState } from "react"
+// import { CurrencyContext } from "./context/currencyContext";
+import Routing from "./components/Routing/Routing";
 
 function App() {
 
-  const [currency, setCurrency] = useState("usd");
+  // const [currency, setCurrency] = useState("usd");
 
   return (
     <>
-      <CurrencyContext.Provider value={{ currency, setCurrency }}>
-        <Home />
-      </CurrencyContext.Provider>
+      {/* <CurrencyContext.Provider value={{ currency, setCurrency }}> */}
+      <Routing />
+      {/* </CurrencyContext.Provider> */}
     </>
   )
 }

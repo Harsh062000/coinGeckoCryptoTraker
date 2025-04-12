@@ -1,14 +1,21 @@
-import { useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { useQuery } from '@tanstack/react-query';
 import { fetchCoinData } from "../../services/fetchCoinData";
-import { CurrencyContext } from "../../context/currencyContext";
+import { useNavigate } from "react-router-dom";
+// import { CurrencyContext } from "../../context/currencyContext";
 // import { fetchCoinData } from "../../services/fetchCoinData";
+
+import currencyStore from '../../store/store';
 
 function CoinTable() {
 
-       const { currency } = useContext(CurrencyContext);
+       // const { currency } = useContext(CurrencyContext);
+
+       const { currency } = currencyStore();
 
        const [page, setPage] = useState(1);
+
+       const navigate = useNavigate();
 
        const { data, isPending, isError, error } = useQuery({
               queryKey: ['coins', page, currency],
@@ -18,6 +25,11 @@ function CoinTable() {
               cacheTime: 1000 * 60 * 2,
               staleTime: 1000 * 60 * 2,
        });
+
+       function handleRedirect(id) {
+              console.log(id);
+              navigate(`/details/${id}`);
+       }
 
        useEffect(() => {
               console.log(data);
@@ -98,7 +110,7 @@ function CoinTable() {
                      <div className="flex flex-col w-[80vw] mx-auto">
                             {isPending && <div>Loadding...</div>}
                             {data && data.map((coin) => (
-                                   <div key={coin.id} className="w-full bg-transparent text-white flex py-4 px-2 font-semibold items-center justify-between cursor-pointer gap-3">
+                                   <div onClick={() => handleRedirect(coin.id)} key={coin.id} className="w-full bg-transparent text-white flex py-4 px-2 font-semibold items-center justify-between cursor-pointer gap-3">
                                           {/* Coin Info */}
                                           <div className="flex items-center justify-start gap-3 basis-[35%]">
                                                  <div className="w-[5rem] h-[5rem]">
