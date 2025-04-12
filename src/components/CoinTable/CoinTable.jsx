@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useQuery } from '@tanstack/react-query';
 import { fetchCoinData } from "../../services/fetchCoinData";
 import { useNavigate } from "react-router-dom";
+import PageLoader from "../../components/PageLoader/PageLoader";
 // import { CurrencyContext } from "../../context/currencyContext";
 // import { fetchCoinData } from "../../services/fetchCoinData";
 
@@ -37,6 +38,10 @@ function CoinTable() {
 
        if (isError) {
               return <div>Error: {error.message}</div>
+       }
+
+       if (isPending) {
+              return <PageLoader />
        }
 
        return (
@@ -109,7 +114,7 @@ function CoinTable() {
                      {/* Coin Data */}
                      <div className="flex flex-col w-[80vw] mx-auto">
                             {isPending && <div>Loadding...</div>}
-                            {data && data.map((coin) => (
+                            {data && data?.map((coin) => (
                                    <div onClick={() => handleRedirect(coin.id)} key={coin.id} className="w-full bg-transparent text-white flex py-4 px-2 font-semibold items-center justify-between cursor-pointer gap-3">
                                           {/* Coin Info */}
                                           <div className="flex items-center justify-start gap-3 basis-[35%]">
